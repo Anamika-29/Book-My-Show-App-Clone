@@ -1,0 +1,51 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spread items horizontally */
+    padding: 10px;
+    background-color: black;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px; /* Adjust the height as needed */
+    margin-right: 10px; /* Add space between the logo and the search bar if needed */
+    padding-left: 150px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    padding: 5px;
+  }
+  
+  .search-icon {
+    margin-left: 5px; /* Add space between the input and the search icon if needed */
+    color: white; /* Set the color of the search icon */
+  }
+  
+  .right-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .location-dropdown {
+    margin-right: 10px; /* Add space between the dropdown and the Sign In button if needed */
+    background-color: black;
+    border: black;
+    color: white;
+    
+  }
+  
+  .sign-in-btn {
+    background-color: red;
+    margin-right: 150px;
+  }
+  

@@ -1,0 +1,24 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: black;
+    color: white;
+  }
+  
+  .left-content ul,
+  .right-content ul {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 150px;
+    display: flex;
+  }
+  
+  .left-content li,
+  .right-content li {
+    margin-right: 10px;
+    
+  }
+  
+  

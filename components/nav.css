@@ -1,0 +1,41 @@
+ul.nav li.dropdown:hover ul.dropdown-menu{ display: block; }
+ul.nav{
+    border-color: black;
+}
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .popup__form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .popup__heading {
+    margin-bottom: 1rem;
+  }
+  
+  .popup__label {
+    margin-bottom: 0.5rem;
+  }
+  
+  .popup__input {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  .popup__button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
