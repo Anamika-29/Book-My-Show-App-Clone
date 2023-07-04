@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
 
-const MovieDetails = ({ movie,setView }) => {
+const MovieDetails = ({movie,setView}) => {
+  console.log(1,movie)
+
   const [showPrompt, setShowPrompt] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedFormat, setSelectedFormat] = useState('');
@@ -23,10 +25,10 @@ const MovieDetails = ({ movie,setView }) => {
   };
 
   const handleBookTicket = () => {
-    const selectedLanguage = prompt(`Select Language: (${movie.lang.join(', ')}):`, movie.lang.join(', '));
-    const selectedFormat = prompt(`Select Format: (${movie.format.join(', ')}):`, movie.format.join(', '));
+    const selectedLanguage = prompt(`Select Language: (${movie.Language.join(', ')}):`, movie.Language.join(', '));
+    const selectedFormat = prompt(`Select Format: (${movie.format}):`, movie.format);
     if (selectedLanguage && selectedFormat) {
-      setView(4);   
+      setView();
     }
   };
 
@@ -34,7 +36,7 @@ const MovieDetails = ({ movie,setView }) => {
     <div>
       <div
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${movie.image})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${movie.Poster})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -42,7 +44,7 @@ const MovieDetails = ({ movie,setView }) => {
       >
         <div className='row'>
           <div className='col-4'>
-            <img src={movie.image} alt={movie.title} width='100%' height='500vh' />
+            <img src={movie.Poster} alt={movie.title} width='100%' height='500vh' />
           </div>
           <div className='col-8 text-white'>
             <h2>{movie.title}</h2>
@@ -55,10 +57,10 @@ const MovieDetails = ({ movie,setView }) => {
                 </button>
               </div>
             </div>
-            <button className='btn bg-light m-2'>{movie.format.join(',')}</button>
-            <button className='btn bg-light m-2'>{movie.lang.join(',')}</button>
+            <button className='btn bg-light m-2'>{movie.format}</button>
+            <button className='btn bg-light m-2'>{movie.Language.join(',')}</button>
             <br />
-            {movie.genre.join(',')}
+            {movie.Genre.join(',')}
             <br />
             <button className='btn btn-danger m-2' onClick={handleBookTicket}>
               Book Tickets
@@ -68,15 +70,14 @@ const MovieDetails = ({ movie,setView }) => {
       </div>
       <h5>About the Movie</h5>
       {movie.about}
-      <h5>Cast</h5>
-      {movie.cast.join(',')}
+      
       
       {showPrompt && (
         <div>
           <h5>Select Language:</h5>
           <select value={selectedLanguage} onChange={handleLanguageChange}>
             <option value=''>Select Language</option>
-            {movie.lang.map((language) => (
+            {movie.Language.map((language) => (
               <option value={language} key={language}>
                 {language}
               </option>
@@ -85,11 +86,7 @@ const MovieDetails = ({ movie,setView }) => {
           <h5>Select Format:</h5>
           <select value={selectedFormat} onChange={handleFormatChange}>
             <option value=''>Select Format</option>
-            {movie.format.map((format) => (
-              <option value={format} key={format}>
-                {format}
-              </option>
-            ))}
+            {movie.format}
           </select>
           <button className='btn btn-primary' onClick={handleProceed}>
             Proceed

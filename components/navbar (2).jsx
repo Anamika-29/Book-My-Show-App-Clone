@@ -2,7 +2,7 @@ import React, { Component,useState } from "react";
 import { FaUserAlt,FaUserCircle,FaHireAHelper } from 'react-icons/fa';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { VscSignOut } from 'react-icons/vsc';
-
+import Dropdown from 'react-dropdown-select';
 import {Link} from "react-router-dom";
 
 import logo from "./IMge/logo.png"
@@ -56,6 +56,29 @@ class NavBar3 extends Component {
          
             this.setState({loc: a})
         }
+        handleDropdownChange = (selectedItem) =>{
+          // Handle dropdown item selection here
+          const selectedValue = selectedItem?.value;
+          switch (selectedValue) {
+            case 'editProfile':
+              this.props.history.push('/myProfile/Edit Profile');
+              break;
+            case 'purchaseHistory':
+              this.props.history.push('/myProfile/Purchase History');
+              break;
+            case 'bookASmile':
+              this.props.history.push('/myProfile/→BookASmile');
+              break;
+            case 'helpAndSupport':
+              this.props.history.push('/myProfile/Help And Support');
+              break;
+            case 'signOut':
+              this.props.history.push('/myProfile/Sign Out');
+              break;
+            default:
+              break;
+          }
+        };
 render() {  
   
       
@@ -116,7 +139,7 @@ return (<React.Fragment>
             <h style={{fontSize:"large"}} onChange={this.handleChange} >{loc} </h></a>
           <ul class="dropdown-menu">
           {ss.map((n1) => (
-<Link key={n1} className="dropdown-item" to={`/home/${n1}`} onClick={()=>this.loca(n1)} >
+<Link key={n1} className="dropdown-item" to={`/home/${n1}/movies`} onClick={()=>this.loca(n1)} >
 <b >{n1}</b>
 </Link>
 ))}
@@ -130,37 +153,41 @@ return (<React.Fragment>
 <ul className="navbar-nav mr-auto" style={{width:"100%"}}>
 {!user&&(<li className="nav-item" style={{width:"100%"}}>
 <Link to={`/home/${loc}/Movies?login=yes`}>
-     <button className="btn   navbar-brand " style={{background:"#00000"}} onClick={()=>this.togglePopup()}><b> Sign in</b></button>    
+     <button className="btn btn-danger" style={{background:"#00000",marginLeft:"290px"}} onClick={()=>this.togglePopup()}><b> Sign in</b></button>    
 </Link>
 </li>)}
-{user && user.role=="customer"&&(
-     <li className="nav-item dropdown">
-     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize:"large",color:"white"}}>
-     <FaUserAlt/>{"HI,"}{user.email}
-     </a>
-     <ul className="dropdown-menu bg-dark " aria-labelledby="navbarDropdown" style={{color:"white"}}>
-       <li style={{color:"white"}}><Link className="dropdown-item" to={`/myProfile/Edit Profile`} style={{color:"white"}}><FaUserCircle />&nbsp;Edit Profile</Link></li>
-      
-       <li><Link className="dropdown-item" to={`/myProfile/Purchase History`} style={{color:"white"}}><BiPurchaseTagAlt/>&nbsp;Purchase History</Link></li>
-      
-       <li><Link className="dropdown-item" to={`/myProfile/→BookASmile`} style={{color:"white"}}>→&nbsp;BookASmile</Link></li>
-       <li><Link className="dropdown-item" to={`/myProfile/Help And Support`} style={{color:"white"}}><FaHireAHelper/>&nbsp;Help And Support</Link></li>
-       <li><Link className="dropdown-item" to={`/myProfile/ Sign Out`} style={{color:"white"}}><VscSignOut/>&nbsp; Sign Out</Link></li>
-     </ul>
-   </li>
+{user && user.role === 'customer' && (
+          <li>
+            <Dropdown
+              options={[
+                { value: 'editProfile', label: 'Edit Profile', icon: <FaUserCircle /> },
+                { value: 'purchaseHistory', label: 'Your Orders', icon: <BiPurchaseTagAlt /> },
+                // { value: 'bookASmile', label: 'BookASmile', icon: '→' },
+                { value: 'helpAndSupport', label: 'Help And Support', icon: <FaHireAHelper /> },
+                { value: 'signOut', label: 'Sign Out', icon: <VscSignOut /> }
+              ]}
+              value=""
+              placeholder={`HI, ${user.email}`}
+              style={{ width: '220px', borderRadius: '4px', padding: '6px 10px', backgroundColor: '#f1f1f1', color: '#333' }}
+              dropdownGap={4}
+              dropdownPosition="bottom"
+              onChange={()=>this.handleDropdownChange()}
+              itemRenderer={({ item, itemIndex, props }) => (
+                <Link to={`/myProfile/${item.value}`} {...props}>
+                  <div>
+                    <div>{item.icon}</div>
+                    <div>{item.label}</div>
+                  </div>
+                </Link>
+              )}
+            />
+          </li>
+        )}
 
-)}
+
 </ul>
 </div>
 
-<div className="col-2"></div>
-{Shoes.map((n1) => (
-    <div className="col-2">
-<Link key={n1} className="nav-link"  to={`/home/${loc}/${n1}`}>
- <p style={{color:"white"}}>{n1}</p>
-</Link></div>
-))}
-<div className="col-2"></div>
  </div>
 
 

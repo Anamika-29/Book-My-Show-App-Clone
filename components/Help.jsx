@@ -8,29 +8,7 @@ import {FaUserCircle } from "react-icons/fa"
        ticket:[]
       
  };
- async fetchData() {
-    let response = await http.get(`/ticket`);
-
-    console.log("response", response);
-
-    let { data } = response;
-    console.log(data);
-    this.setState({ ticket:[ data[0] ]});
-  }
-
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) this.fetchData();
-  }
-
-        view=(a)=>{
-           let s1={...this.state}
-           s1.view=a
-           this.setState(s1)
-        }
+ 
     render() { 
 
    
@@ -112,4 +90,4 @@ write to us on <b className="text-primary">[bookmyshowhelpandsupport@bookmyshow.
         
             </div>
             )}}
-            export default Help
+            export default Help;

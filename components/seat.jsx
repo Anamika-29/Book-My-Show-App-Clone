@@ -27,8 +27,8 @@ date: [{day:"Tue" ,date:24, month:"March"},
    date2:{day:"Tue" ,date:24, month:"March"},
    
                                                            Show:[],
-                                                          Price:[],
-                                                          pr:[]
+                                                           Price:[],
+                                                           pr:[]
 }
 
 
@@ -163,14 +163,11 @@ console.log(filter)
      data.push(arr.Genre)
 
 
- return (<React.Fragment><div className="head bg-dark" style={{height:"100px"}}>
-     <h1 className="text-white " style={{margin:"4px", fontSize:"large"}} >{this.props.mov}</h1>
-     <img src="https://as2.ftcdn.net/v2/jpg/01/96/62/89/1000_F_196628912_pWWyFkLy6OMW9yui2BwUymC0cKRd6qFl.jpg" alt="" srcset="" style={{width:"30px"}}/>
-    
-    {this.props.M===undefined?      <b className="text-white " style={{fontSize:"large"}}> {arr.Metascore}%   {data[0]} <br />{arr.imdbVotes} votes</b> :
-     <b className="text-white " style={{fontSize:"large"}}> {arr.Metascore}%   {this.props.M.Genre.map((st)=>
-     <button className="btn btn-dark">{st}</button>
-     )} <br />{arr.imdbVotes} votes</b> }
+ return (<React.Fragment>
+  <div className="head bg-dark" style={{height:"100px"}}>
+     <h1 className="text-white " style={{marginLeft:"150px"}} >{this.props.mov}</h1>
+     
+     
 
      </div>
  <div className="head bg-light" style={{height:"100px",background:"light"}}>
@@ -180,12 +177,12 @@ console.log(filter)
         {this.state.date.map((st,index)=>
         st.day==this.state.date2.day?
        
-<button className="btn  m-1" onClick={()=>this.date(index)} style={{background:"#AEF359"}} >{st.day} &nbsp;
+<button className="btn btn-danger m-1" onClick={()=>this.date(index)}>{st.day} &nbsp;
         <b>{st.date}</b>&nbsp;
         {st.month}</button>
       :
 
-        <button className="btn btn-light" onClick={()=>this.date(index)}>{st.day} &nbsp;
+        <button className="btn btn-light m-1" onClick={()=>this.date(index)}>{st.day} &nbsp;
         <b>{st.date}</b>&nbsp;
         {st.month}
         </button>
@@ -195,12 +192,12 @@ console.log(filter)
         
        
         <div className="col-1">
-        <nav className="navbar navbar-expand-sm navbar-dark" >
+        <nav className="navbar navbar-expand-sm navbar-light" >
         <ul class="nav navbar-nav" >
-        <li class="dropdown">
+        <li class="dropdown bg-light">
           <a href="#" className="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true"
            aria-expanded="false"  style={{textDecoration:"none"}}>
-            <h style={{fontSize:"large"}} onChange={this.handleChange} ><b style={{color:"black",fontWeight:"normal"}}>Filter Price</b></h></a>
+            <h style={{fontSize:"large"}} onChange={this.handleChange} ><b style={{background:"white",color:"black",fontWeight:"normal"}}>Filter Price</b></h></a>
           <ul class="dropdown-menu">
           {this.state.Filter.map((n1) => (<React.Fragment>
             <a class="dropdown-item" href="#">  <input type="checkbox" name="Price" id=""  onClick={this.handleChange} value={n1.price}/> &nbsp;
@@ -217,12 +214,12 @@ console.log(filter)
        
        </div>
         <div className="col-1">
-        <nav className="navbar navbar-expand-sm navbar-dark" >
-        <ul class="nav navbar-nav" >
-        <li class="dropdown">
+        <nav className="navbar navbar-expand-sm navbar-light" >
+        <ul class="nav navbar-nav navbar-light" >
+        <li class="dropdown bg-light">
           <a href="#" className="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true"
            aria-expanded="false"  style={{textDecoration:"none"}}>
-            <h style={{fontSize:"large"}} onChange={this.handleChange} ><b style={{color:"black",fontWeight:"normal"}}>FilterShow </b></h></a>
+            <h style={{fontSize:"large"}} onChange={this.handleChange} ><b style={{background:"white",color:"black",fontWeight:"normal"}}>FilterShow </b></h></a>
           <ul class="dropdown-menu">
           {this.state.FilterShow.map((n1) => (<React.Fragment>
             <a class="dropdown-item" href="#">  <input type="checkbox" name="Show" id=""  onClick={this.handleChange} value={n1}/> &nbsp;
@@ -236,22 +233,7 @@ console.log(filter)
        
   </div>
     </div><br />
-    <div className="head " style={{height:"100px",background:"#AEF359"}}>
-        <div className="row">
-            <div className="col-2" >
-                <FaMobileAlt style={{fontSize:"large",margin:"30px"}}/><br/>
-                E-ticket Available
-            </div>
-            <div className="col-4 m-1" >
-  
-       </div>
-       <div class="vr bg-light m-2"></div>
-       <div className="col-2 m-2" >
-                <FaHamburger style={{fontSize:"large",margin:"20px"}}/><br/>
-             Food Available
-            </div>
-        </div>
-    </div>
+   
 
     {filter1.map((st1,index)=>
     <div className="row">
@@ -259,11 +241,11 @@ console.log(filter)
 <div className="row">
     <div className="col-2 text-center"><AiOutlineHeart style={{fontSize:"30px"}}/></div>
     <div className="col-10"><b>{st1.room}</b><br />
-    <FaMobileAlt style={{color:"gray"}}/>
-    <b style={{color:"gray",fontWeight:"normal"}}>   E-ticket Available</b>{"  "}
+    <FaMobileAlt style={{color:"#2dc492"}}/>
+    <b style={{color:"#2dc492",fontWeight:"normal"}}>M-Ticket</b>{"  "}
                 {"  "}   {"  "}  
                 <FaHamburger style={{color:"yellowgreen"}}></FaHamburger>
-           <b style={{color:"yellowgreen",fontWeight:"normal"}}> Food Available</b> 
+           <b style={{color:"yellowgreen",fontWeight:"normal"}}> Food and Beverages</b> 
     </div>
     </div>
 
@@ -308,31 +290,26 @@ console.log(filter)
   :this.state.pr[2]==st.Price?
     
   (<Link to={`/home/${location1}/${Movies}/${index}?q=${this.props.M.Title}&date=${this.state.date2.day+" "+this.state.date2.date+" "+this.state.date2.month}&room=${st1.room}`}>
-        <button type="button" className="btn btn-light  text-primary m-1 " data-bs-toggle="tooltip" data-bs-placement="top" title={ "Gold:RS "+st.Price+",Recyliner:RS 450"} 
+        <button type="button" className="btn btn-light  text-success m-1 " data-bs-toggle="tooltip" data-bs-placement="top" title={ "Gold:RS "+st.Price+",Recyliner:RS 450"} 
         onClick={()=>this.ticktlog(index,index1)
         } style={{borderColor:"black"}}>{console.log("dflk",this.state.pr[0]==st.Price)}
   {st.time}</button></Link>)
   :this.state.pr==[] && this.state.Show==[] ||this.state.pr==undefined&&this.state.Show==undefined||
   this.state.pr.length==0&&this.state.Show.length==0
   ? (<Link to={`/home/${location1}/${Movies}/${index}?q=${this.props.M.Title}&date=${this.state.date2.day+" "+this.state.date2.date+" "+this.state.date2.month}&room=${st1.room}`}>
-  <button type="button" className="btn btn-light  text-primary m-1 " data-bs-toggle="tooltip" data-bs-placement="top" title={ "Gold:RS "+st.Price+",Recyliner:RS 450"} 
+  <button type="button" className="btn btn-light  text-success m-1 " data-bs-toggle="tooltip" data-bs-placement="top" title={ "Gold:RS "+st.Price+",Recyliner:RS 450"} 
   onClick={()=>this.ticktlog(index,index1)
   } style={{borderColor:"black"}}>{console.log("dflk",this.state.pr[0]==st.Price)}
 {st.time}</button></Link>):""
   )}
-<li>Cancellation available</li>
+<li >Cancellation available</li>
 </div>
 
 
     </div>
     
     )}
-      <div className="row" style={{background:"#000000",width:"100%"}}>
-         <div className="col-5"><hr style={{color:"white"}}/></div>
-         <div className="col-2"><img src={logo} alt="" srcset="" style={{width:"100px"}}/></div>
-
-<div className="col-5"><hr style={{color:"white"}}/></div>
-       </div>
+      
     </div></React.Fragment>
 );
 }}

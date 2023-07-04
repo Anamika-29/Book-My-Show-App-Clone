@@ -11,9 +11,11 @@ import LoginPopup from "./Login";
 import authSys from "./services/authSys";
 import logo from "./IMge/logo.png"
 import http from "./services/httpServer";
+import MovieDetails from "./movieDetails";
 class MAINPAGE extends Component{
   state={
     page:1,
+    view:0,
     images : [
       { url: "https://i.ibb.co/ZGsJ3dh/jio-mami-21st-mumbai-film-festival-with-star-2019-02-09-2019-10-58-45-992.png" },
       { url: "https://i.ibb.co/wRr7W1P/hustlers-01-10-2019-05-09-55-486.png" },
@@ -21,6 +23,7 @@ class MAINPAGE extends Component{
       Movies:[],
       user:[],
       Language:[],
+      movie:null,
 formatData
 :
 ["2D", "3D", "4DX"],
@@ -81,6 +84,7 @@ LanguageData
       return arr1;
       
       };
+      
     filterParam2= (arr, name,values) => {
 
       if (!values) return arr;
@@ -118,6 +122,19 @@ searchStr = this.addToQueryString(searchStr, "Genre", Genre);
 return searchStr;
 };
   
+changeView = () =>{
+  let s1 = {...this.state};
+  s1.view=1;
+  this.setState(s1);
+
+}
+setMovie = (movie) =>{
+  console.log(`Inside setMovie : ${movie}`)
+  let s1 = {...this.state};
+  s1.movie=movie;
+  this.props.setView(2);
+  this.setState(s1);
+}
 handleChange = (e) => {
   const { currentTarget: input } = e;
   let s1 = { ...this.state };
@@ -155,6 +172,7 @@ return arr;
               this.callURL(`/home/${location1}/${Movies}`, options);
           };
 render() {
+  let {view} = this.state;
   let queryParams = queryString.parse(this.props.location.search);
   let {location1,Movies,time} = this.props.match.params;
   let ar=this.filterParams(this.state.Movies,queryParams)
@@ -182,24 +200,10 @@ console.log(queryParams)
   return (
 
   
-      <div className="example" style={{width:"100%"}}>
-     {  queryParams.q===undefined?<React.Fragment>
+      <div className="example" style={{width:"100%",paddingRight:"150px",paddingLeft:"150px"}}>
+     {  queryParams.q===undefined  && view===0 ?<React.Fragment>
         <div className="row text-center">
-      <SimpleImageSlider
-        width={1000}
-        height={400}
-        images={this.state.images}
-        showBullets={true}
-        showNavs={true}
-        className="img-fluid"
-        autoPlay={true}
-       style={{margin:"auto"}}
-        
-      /> 
-    
-       
-  
-
+         
       <NavBar1 location={location1}/>
         <div >
          
@@ -232,21 +236,38 @@ onOptionChange={this.handleOptionChange}
             <div className="row">
             {stu.map(( id ) => (
                 
-          <div className="col-2 bg-light"   >
+          <div className="col-md-3">
+{/* 
+            <div className="card mb-3">
+                  <img
+                    src={movie.image}
+                    className="card-img-top movie-image"
+                    alt={movie.title}
+                    height="250vh"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{movie.title}</h5>
+                    <p className="card-text">{movie.genre.join(', ')}</p>
+                  </div>
+                </div> */}
+                
             <Link to={`/home/${location1}/${Movies}?q=${id.Title}`} style={{textDecoration:"none",color:"black"}}>
-            <div className="col-12">
-            <img  src={id.Poster} alt="" srcset="" style={{width:"200px",height:"300px",borderTopLeftRadius:"10px",borderTopRightRadius:"10px"}}/>
-            <br /></div>
+            <div className="card mb-3" onClick={()=>this.setMovie(id)}>
+            <img
+                    src={id.Poster}
+                    className="card-img-top movie-image"
+                    alt={id.title}
+                    height="250vh"
+                    
+                  /> 
          <div className="col-12" style={{margin:"auto",background:"#000000",width:"200px",borderBottomLeftRadius:"10px",borderBottomRightRadius:"10px",color:"white"}}>
             <img  src="https://www.freepnglogos.com/uploads/red-star-png/red-star-star-red-clip-art-clkerm-vector-clip-art-online-7.png" alt="" srcset="" style={{width:"15px",height:"15px",marginBottom:"8px"}}/>
             &nbsp;  {id.imdbRating}/10{""} {""} &nbsp; &nbsp;{id.imdbVotes} votes</div>
             
-            <div className="col-12">
-           <b style={{fontSize:"medium",color:"black"}}>{id.Title}</b> <br />
-           
-           <b style={{fontSize:"small" ,color:"gray"}}>{id.Genre.join("/")} </b><br /> 
-           
-           <br />
+            <div className="card-body">
+                    <h5 className="card-title">{id.title}</h5>
+                    <p className="card-text">{id.Genre.join(', ')}</p>
+                  </div>
            </div></Link>
           </div>
             ))}
@@ -256,26 +277,22 @@ onOptionChange={this.handleOptionChange}
             </div></div>
         
         </div>
-         <div className="row" style={{background:"#000000",width:"100%"}}>
+         {/* <div className="row" style={{background:"#000000",width:"100%"}}>
          <div className="col-5"><hr style={{color:"white"}}/></div>
          <div className="col-2"><img src={logo} alt="" srcset="" style={{width:"100px"}}/></div>
 
 <div className="col-5"><hr style={{color:"white"}}/></div>
-       </div>
+       </div> */}
        </React.Fragment>
-        :<Seat mov={queryParams.q} M={find} location1={location1} Movies={Movies} queryParams={queryParams}/>}
+        :view===0 && queryParams.q!==undefined ? <MovieDetails movie={find} setView={this.changeView} mov={queryParams.q} M={find} location1={location1} Movies={Movies} queryParams={queryParams}/> :< Seat mov={queryParams.q} M={find} location1={location1} Movies={Movies} queryParams={queryParams} /> }
 
        
-   {queryParams.login=="yes"? <LoginPopup location1={location1} time={time} q={queryParams.q} room={queryParams.room} date={queryParams.date} />:[]} 
-      </div>
+   {/* {queryParams.login=="yes"? <LoginPopup location1={location1} time={time} q={queryParams.q} room={queryParams.room} date={queryParams.date} />:[]}  */}
+      </div> 
     
   );
 }
 }
 
 export default   MAINPAGE;
-
-
-
-
 

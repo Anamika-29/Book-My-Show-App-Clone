@@ -5,7 +5,7 @@ import {FaUserCircle } from "react-icons/fa"
  class AddPerson extends Component {
     state = {
      
-       users:[{first_name:"",last_name:"",email:"",Married:""}],
+       users:{first_name:"",last_name:"",email:"",Married:""},
         Departments: ["Yes","No"],
       
  };
@@ -14,10 +14,10 @@ import {FaUserCircle } from "react-icons/fa"
     let response = await http.get("/userdata");
     console.log(response);
     let {data} =response; 
-    console.log(data);
-data==[]?this.state.users="":this.state.users= data[0]
+let user = data?{first_name:"",last_name:"",email:"",Married:""}:data[0];
+console.log(user)
    
-    this.setState(this.state);
+    this.setState({users:user});
   
     }
 
@@ -25,10 +25,11 @@ data==[]?this.state.users="":this.state.users= data[0]
   
     handleChange = (e) => {
         const { currentTarget: input } = e;
-        let s1 = { ...this.state };
+        let s1 = {...this.state};
+        console.log(s1);
+        console.log("Inside handleChange",s1.users)
       
         s1.users[input.name] = input.value;
-        console.log(s1.users)
         this.setState(s1);
         };
    
@@ -51,85 +52,81 @@ data==[]?this.state.users="":this.state.users= data[0]
     
         }
     render() { 
-           let {cities,users ,Departments,Exp}=this.state
-           let user=authSys.getUser()
-    const {first_name="",last_name='',Married=""}=users
+           let {cities,users={},Departments,Exp}=this.state;
+           console.log(users)
+           let user=authSys.getUser();
+    const {first_name,last_name,Married}=users;
    
     let {index} = this.props.match.params;
     return(
         
-            <div className="container">
-
-                <div className="row bg-dark" style={{widows:"100%" ,height:"200px"}}>
-                 <b className="text-center" >
-                    <img src="https://cdn-icons-png.flaticon.com/512/61/61205.png" alt="" srcset="" style={{width:"100px",margin:"20px"}} />
-                  <b className="text-white" style={{fontSize:"large"}}>{user.email}</b> 
-                   
-                    </b>   
-                </div>
-            <div className="form-group">
-                <div className="bg-secondary" style={{widows:"100%" ,height:"50px"}}></div>
-            <label> First Name</label>
-            <input
+        <div style={{marginLeft:"150px",marginRight:"150px"}}>
+        <div className="row bg-dark">
+          <div className="col text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/61/61205.png" alt="" srcset="" style={{width:"100px",margin:"20px"}} />
+            <b className="text-white" style={{fontSize:"large"}}>{user.email}</b>
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="bg-secondary" style={{width:"100%", height:"50px"}}></div>
+          <label>First Name</label>
+          <input
             type="text"
             className="form-control"
-            id=" First name"
+            id="first_name"
             name="first_name"
-            placeholder="Enter  First Name"
-            value={user.first_name!=undefined?user.first_name:first_name}
-            onChange={ this.handleChange}
-            />
-            </div>
-            <div className="form-group">
-            <label>Last Name</label>
-            <input
+            placeholder="Enter First Name"
+            value={user.first_name !== undefined ? user.first_name : first_name}
+            onChange={this.handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Last Name</label>
+          <input
             type="text"
             className="form-control"
-            id="Last name"
+            id="last_name"
             name="last_name"
             placeholder="Enter Last Name"
-            value={user.last_name!=undefined?user.last_name:last_name}
-            onChange={ this.handleChange}
-            />
-            </div>
-            <div className="form-group">
-            <label>Email</label>
-            <input
+            value={user.last_name !== undefined ? user.last_name : last_name}
+            onChange={this.handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input
             type="text"
             className="form-control"
             id="email"
             name="email"
             placeholder="Enter email"
             value={user.email}
-            onChange={ this.handleChange}
-      readOnly
-            />
+            onChange={this.handleChange}
+            readOnly
+          />
+        </div>
+      
+        <div className="form-group">
+          <label className="font-weight-bold">Choose Married</label> <br />
+          {Departments.map((d1) => (
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="Married"
+                value={Married === "" || Married === undefined ? "" : Married}
+                checked={Married === d1}
+                onChange={this.handleChange}
+              />
+              <label className="form-check-label">{d1}</label>
             </div>
-           
-    
-<label className="form-check-label font-weight-bold">
-Choose Married &nbsp;
-</label> <br />
-{Departments.map((d1) => (
-<div className="form-check form-check-inline">
-<input
-className="form-check-input"
-type="radio"
-name="Married"
-value={Married==""||Married===undefined?"":Married}
- checked={this.state.users.Married==d1}
-onChange={this.handleChange}
-/>
-<label className="form-check-label">{d1}</label>
-</div>))}
-<br />
-
-
-
-
-            <button className="btn btn-sm btn-primary" onClick={this.handleSubmit}>
-            {index?"update":"Submit"}
-            </button>
-            </div>
+          ))}
+        </div>
+      
+        <button className="btn btn-sm btn-primary" onClick={this.handleSubmit}>
+          {index ? "Update" : "Submit"}
+        </button>
+      </div>
+      
             )}}
             export default AddPerson

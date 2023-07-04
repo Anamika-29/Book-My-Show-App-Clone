@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
-import { BiSquareRounded } from "react-icons/bi";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import queryString from "query-string";
 import authSys from "./services/authSys";
-import { connect } from "react-redux";
 import http from "./services/httpServer";
-import { rows, rows2 } from "./data";
 import "./col.css";
 import Icon from "./screen";
 import LoginPopup from "./Login";
@@ -1568,7 +1565,7 @@ T6:[{
     console.log("response", response);
 
     let { data } = response;
-    console.log(data[0].showtime);
+    console.log(data);
     this.setState({ theater: data,showtime:data[0].showtime});
   }
 
@@ -2132,21 +2129,15 @@ let HEL=""
 
     let ticket = this.state.ticket.reduce((acc,curr) => acc+curr.price,0);
     return (
-      <React.Fragment>
+      <div style={{marginLeft:"150px",marginRight:"150px"}}>
         <div className="head bg-dark" style={{ width: "100%" }}>
           <div className="row">
           <div className="col-1">
-        <h2 className="text-white" style={{fontSize:"large",margin:"15px"}} onClick={()=>this.back()}><MdOutlineArrowBackIosNew /></h2> 
+        <h2 className="text-white" style={{fontSize:"large",margin:"15px"}}><Link to={`/home/${location1}/${Movies}`} >
+        <MdOutlineArrowBackIosNew /></Link></h2> 
          </div>
           <div className="col-11">
-          <h1
-            className="text-white "
-            style={{ margin: "4px", fontSize: "large" }}
-          >
-            {queryParams.q} <b style={{ float: "right" }}> {this.state.ticket.length} ticket <b className="col-1" onClick={()=>this.back1()}>
-        X
-         </b> </b>
-          </h1>
+          
           <b
             className="text-white "
             style={{ margin: "4px", fontSize: "large" }}
@@ -6909,7 +6900,7 @@ let HEL=""
      
 {queryParams.login=="yes"? <LoginPopup location1={location1} time={time} q={queryParams.q} room={queryParams.room} date={queryParams.date} />:[]} 
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
